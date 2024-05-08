@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
     checkbox.checked = false;
     checkboxtxt.textContent = 'Modo Claro';
   }
-  dibujarPedido_dos();
 });
 
 //Cargamos los datos de los productos en articulos
@@ -326,8 +325,7 @@ function vaciarCarrito() {
 
 //Concluir Pedido:Inicio
 function finalizarPedido_dos() {
-
-  // Si el carrito esta vacio no poroseguimos con la compra y le mostramos un mensaje al cliente
+  //Si el carrito esta vacio no poroseguimos con la compra y le mostramos un mensaje al cliente
   if (cantidadTotal === 0) {
     // Mostrar SweetAlert2 indicando que se debe agregar un producto al carrito
     Swal.fire({
@@ -349,26 +347,49 @@ function finalizarPedido_dos() {
         '<input id="swal-input6" class="swal2-input" placeholder="Codigo Seguridad">' +
         '<input id="swal-input7" class="swal2-input" placeholder="Nombre Completo Titular Tarjeta">',
       focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Aceptar',
+      cancelButtonText: 'Cancelar',
       preConfirm: () => {
-        return [
+        //return [
+        const inputs = [
           document.getElementById('swal-input1').value,
           document.getElementById('swal-input2').value,
-          document.getElementById('swal-input3').value
-        ]
+          document.getElementById('swal-input3').value,
+          document.getElementById('swal-input4').value,
+          document.getElementById('swal-input5').value,
+          document.getElementById('swal-input6').value,
+          document.getElementById('swal-input7').value
+        ];
+        // Verificar si algún campo está vacío
+        if (inputs.some(input => !input)) {
+          Swal.showValidationMessage('Por favor, completa todos los campos.');
+        } else {
+          return inputs;
+        }
+
       }
     }).then((result) => {
       if (result.isConfirmed) {
+        //Si dimos ok en el formulario de datos del cliente
         NombreCli = result.value[0];
         TelefonoCli = result.value[1];
         DireccionCli = result.value[2];
+
+        //Mostramos un msj
         Swal.fire({
           title: 'Confirmacion de Compra',
           html:
             'Muchas gracias por tu compra ' + result.value[0] + ', en los proximos minutos te estaremos preparando tu pedido para el envio a la direccion ' + result.value[2] + '<br>' +
-            'Teléfono de contacto: ' + result.value[1] + '<br>'
-        })
-        generarTicket();
+            'Teléfono de contacto: ' + result.value[1] + '<br>',
+          icon: 'info',
+          confirmButtonText: 'Cerrar'
+        }).then(() => {
+          //Generamos ticket después de mostrar el mensaje de confirmación
+          generarTicket();
+        });
       }
+
     })
 
   }

@@ -5,20 +5,20 @@ let checkbox = document.querySelector('input[type="checkbox"]');
 let checkboxtxt = document.querySelector('.texto');
 
 // Se agrega un event listener para el evento 'change'
-checkbox.addEventListener('change', function () {    
-  
+checkbox.addEventListener('change', function () {
+
   // Cuando el checkbox cambia, alterna entre las clases 'dark-mode' y 'light-mode' en el body
   if (this.checked) {
-    
+
     //Activar Modo Noche
     document.body.classList.add('dark-mode');
-    document.body.classList.remove('light-mode');    
+    document.body.classList.remove('light-mode');
     checkboxtxt.textContent = 'Modo Noche';
     localStorage.setItem('modo', 'noche');
   } else {
     //Activar Modo Claro
     document.body.classList.add('light-mode');
-    document.body.classList.remove('dark-mode');    
+    document.body.classList.remove('dark-mode');
     checkboxtxt.textContent = 'Modo Claro';
     localStorage.setItem('modo', 'claro');
   }
@@ -33,29 +33,29 @@ $(document).ready(() => { });
 //Cuando se necesite que el código se ejecute lo más pronto posible.
 document.addEventListener("DOMContentLoaded", function () { });
 
-  // Deslizamiento Div Carrito
-  $(document).ready(function () {
-    $(".cabecera_divPanelWeb_divMenuflex_divPanelCuentaCarrito_ul_li_a").click(function () {
-      if ($("#lista_carrito").css('display') != 'none') {
-        
-        $("#lista_carrito").removeClass('animate__slideInRight').addClass('animate__slideOutRight');
-        setTimeout(function () {
-          $("#lista_carrito").hide().removeClass('animate__slideOutRight');
-        }, 1400); // Tiempo que tarda la animación en completarse
-      } else {
-       
-        $("#lista_carrito").show().removeClass('animate__slideOutRight').addClass('animate__animated animate__slideInRight');
-      }
-    });
+// Deslizamiento Div Carrito
+$(document).ready(function () {
+  $(".cabecera_divPanelWeb_divMenuflex_divPanelCuentaCarrito_ul_li_a").click(function () {
+    if ($("#lista_carrito").css('display') != 'none') {
 
-    $("#cerrar_carrito").click(function (e) {      
-      e.preventDefault();
       $("#lista_carrito").removeClass('animate__slideInRight').addClass('animate__slideOutRight');
       setTimeout(function () {
         $("#lista_carrito").hide().removeClass('animate__slideOutRight');
-      }, 1400);
-    });
+      }, 1400); // Tiempo que tarda la animación en completarse
+    } else {
+
+      $("#lista_carrito").show().removeClass('animate__slideOutRight').addClass('animate__animated animate__slideInRight');
+    }
   });
+
+  $("#cerrar_carrito").click(function (e) {
+    e.preventDefault();
+    $("#lista_carrito").removeClass('animate__slideInRight').addClass('animate__slideOutRight');
+    setTimeout(function () {
+      $("#lista_carrito").hide().removeClass('animate__slideOutRight');
+    }, 1400);
+  });
+});
 
 // usado de manera provisoria para obtener un nro aleatorio para el nro de factura
 function obtenerEnteroRandom(int) {
@@ -84,7 +84,7 @@ function generarTicket() {
   //Generamos el mensaje del ticket
   //let mensajeTicket = `Simulacion de Ticket:\n\nFactura: Tipo C 0003-${ticketGestion}\n\nNombre: ${nombre}\nTeléfono: ${telefono}       Dirección: ${direccion}\n\n${listaItems}\nPrecio Final: $${precioFinal}`;
   let mensajeTicket = `Simulacion de Ticket:<br><br>Factura: Tipo C 0003-${ticketGestion}<br><br>Nombre: ${nombre}<br>Teléfono: ${telefono}       Dirección: ${direccion}<br><br>${listaItems}<br><br><br>Precio Final: $${precioFinal}`;
-  
+
   //Mostramos el ticket en un alert o sweetalert  
   Swal.fire({
     title: 'Tu Ticket',
@@ -95,4 +95,6 @@ function generarTicket() {
 
   vaciarCarrito();
   listaCarrito.style.display = "none";
+
 }
+
