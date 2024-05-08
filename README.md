@@ -3,7 +3,6 @@ Proyecto Final para Javascript
 El proyecto HTML esta basado en el proyecto final del curso de Desarrollo Web de mi repositorio y adaptado para este trabajo.
 Solo funcionan los enlaces vinculados a este trabajo de una aplicacion tipo ecommerce.
 
-
 Funcionamiento de la app:
 
 En el codigo js (app.js y main.js) se deja breve comentario de lo que hace cada funcion.
@@ -22,3 +21,5 @@ Luego el proceso de compra standart,
 * Se mostrara ticket en pantalla y se vacia el carrito
 
 
+Repo: https://github.com/Tincho83/FullStack_2Javascript_TP3
+Web: https://tincho83.github.io/FullStack_2Javascript_TP3/
