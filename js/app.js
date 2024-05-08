@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     checkbox.checked = false;
     checkboxtxt.textContent = 'Modo Claro';
   }
-  dibujarPedido_dos
+  dibujarPedido_dos();
 });
 
 //Cargamos los datos de los productos en articulos
