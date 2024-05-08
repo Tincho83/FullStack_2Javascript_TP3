@@ -64,7 +64,6 @@ function obtenerEnteroRandom(int) {
 
 //Simulacion de Ticket impreso
 function generarTicket() {
-  debugger;
   //Creando alert solo para simulacion de ticket.");
   let ticketGestion = obtenerEnteroRandom(9999999);
   let nombre = NombreCli;

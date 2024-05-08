@@ -272,13 +272,13 @@ function dibujarPedido_dos() {
   </tbody>
   </table>`;
 
-  tablaBody += `</div><p></p>`;  
+  tablaBody += `</div><p></p>`;
   tablaBody += `<button id="btnfinalizarPedido_dos" onclick="finalizarPedido_dos()"><img src="imgs/botones/icono_pagar.jpg" alt="Eliminar ícono" class="btn_concluircompra">Finalizar compra</button>`;
 
   listaCarrito.innerHTML = tablaHeader + tablaBody + tablaFooter;
 
   $(document).ready(function () {
-    $("#cerrar_carrito").click(function (e) {      
+    $("#cerrar_carrito").click(function (e) {
       e.preventDefault();
       $("#lista_carrito").removeClass('animate__slideInRight').addClass('animate__slideOutRight');
       setTimeout(function () {
@@ -300,16 +300,16 @@ function eliminarItem(indice) {
   pedido.items.splice(indice, 1);
   dibujarPedido_dos();
   carrito.textContent = cantidadTotal;
-  if (cantidadTotal == 0) {    
+  if (cantidadTotal == 0) {
     localStorage.removeItem("pedidocarrito");
     localStorage.removeItem("pedidocarritocantT");
     localStorage.removeItem("horaPedido");
   }
-  else {    
+  else {
   }
 }
 
-function vaciarCarrito() {  
+function vaciarCarrito() {
   cantidadTotal = 0;
   pedido.items.splice(0, productoscarrito);
 
@@ -326,37 +326,52 @@ function vaciarCarrito() {
 
 //Concluir Pedido:Inicio
 function finalizarPedido_dos() {
-  Swal.fire({
-    title: 'Por favor, ingresa tus datos',
-    html:
-      '<input id="swal-input1" class="swal2-input" placeholder="Nombre y Apellido">' +
-      '<input id="swal-input2" class="swal2-input" placeholder="Teléfono">' +
-      '<input id="swal-input3" class="swal2-input" placeholder="Dirección">' +
-      '<input id="swal-input4" class="swal2-input" placeholder="Nro Tarjeta de Credito/Debito">' +
-      '<input id="swal-input5" class="swal2-input" placeholder="Fecha Vencimiento">' +
-      '<input id="swal-input6" class="swal2-input" placeholder="Codigo Seguridad">' +
-      '<input id="swal-input7" class="swal2-input" placeholder="Nombre Completo Titular Tarjeta">',
-    focusConfirm: false,
-    preConfirm: () => {
-      return [
-        document.getElementById('swal-input1').value,
-        document.getElementById('swal-input2').value,
-        document.getElementById('swal-input3').value
-      ]
-    }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      NombreCli = result.value[0];
-      TelefonoCli = result.value[1];
-      DireccionCli = result.value[2];
-      Swal.fire({
-        title: 'Confirmacion de Compra',
-        html:
-          'Muchas gracias por tu compra ' + result.value[0] + ', en los proximos minutos te estaremos preparando tu pedido para el envio a la direccion ' + result.value[2] + '<br>' +
-          'Teléfono de contacto: ' + result.value[1] + '<br>'        
-      })      
-      generarTicket();
-    }
-  })
+
+  // Si el carrito esta vacio no poroseguimos con la compra y le mostramos un mensaje al cliente
+  if (cantidadTotal === 0) {
+    // Mostrar SweetAlert2 indicando que se debe agregar un producto al carrito
+    Swal.fire({
+      icon: 'warning',
+      title: 'Carrito vacío',
+      text: 'Por favor, agrega productos al carrito antes de finalizar la compra.',
+      confirmButtonText: 'Aceptar'
+    });
+  } else {
+    //Mostramos SweetAlert2 para ingresar los datos del cliente
+    Swal.fire({
+      title: 'Por favor, ingresa tus datos',
+      html:
+        '<input id="swal-input1" class="swal2-input" placeholder="Nombre y Apellido">' +
+        '<input id="swal-input2" class="swal2-input" placeholder="Teléfono">' +
+        '<input id="swal-input3" class="swal2-input" placeholder="Dirección">' +
+        '<input id="swal-input4" class="swal2-input" placeholder="Nro Tarjeta de Credito/Debito">' +
+        '<input id="swal-input5" class="swal2-input" placeholder="Fecha Vencimiento">' +
+        '<input id="swal-input6" class="swal2-input" placeholder="Codigo Seguridad">' +
+        '<input id="swal-input7" class="swal2-input" placeholder="Nombre Completo Titular Tarjeta">',
+      focusConfirm: false,
+      preConfirm: () => {
+        return [
+          document.getElementById('swal-input1').value,
+          document.getElementById('swal-input2').value,
+          document.getElementById('swal-input3').value
+        ]
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        NombreCli = result.value[0];
+        TelefonoCli = result.value[1];
+        DireccionCli = result.value[2];
+        Swal.fire({
+          title: 'Confirmacion de Compra',
+          html:
+            'Muchas gracias por tu compra ' + result.value[0] + ', en los proximos minutos te estaremos preparando tu pedido para el envio a la direccion ' + result.value[2] + '<br>' +
+            'Teléfono de contacto: ' + result.value[1] + '<br>'
+        })
+        generarTicket();
+      }
+    })
+
+  }
+
 }
 //Concluir Pedido:Fin
